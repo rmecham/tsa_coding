@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 
 services:
   db:
@@ -10,9 +10,7 @@ services:
       - .env
     command: mysqld --max-connections=1000
   domserver:
-    build:
-      context: .
-      dockerfile: domserver.Dockerfile
+    image: "tsacoding/domserver:7.2.0"
     container_name: dj_domserver
     ports:
       - 5000:80
@@ -21,9 +19,7 @@ services:
     env_file:
       - .env
   judgehost:
-    build:
-      context: .
-      dockerfile: judgehost.Dockerfile
+    image: "tsacoding/judgehost:7.2.0"
     container_name: dj_judgehost
     depends_on:
       - domserver
