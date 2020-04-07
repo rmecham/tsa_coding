@@ -1,22 +1,28 @@
-# Using Docker to Run DOMjudge
+# Building Docker Images
 
-## Prerequisites
+## Introduction
 
-Before you can begin, you must first install two critical software packages on the system on which
-you intend to run DOMjudge. The first is [git](https://git-scm.com) and the second is
-[Docker](https://www.docker.com). Both are available for Mac, Windows, and Linux and both provide
-detailed installation instructions.
+If you are looking to simply run the DOMjudge system for your competition, *this is not the place
+for you*. This directory contains the tools and files needed to build new versions of the Docker
+images.
 
-## Build and Run Process
+## Perform a Build
 
-With git installed, you can clone this repository to the machine that will run DOMjudge.
-
-Then, from this directory, run the following commands:
+If performing a new build is indeed what you are looking to do, then the good news is that the
+process is highly automated. Assuming you have [Docker](https://www.docker.com) installed already,
+and assuming that you are running a UNIX-based operating environment (e.g.
+[Linux](https://www.techradar.com/best/best-linux-distros), [macOS](https://www.apple.com/macos/),
+or [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10)), all
+you need to do is this:
 
 ```
-docker-compose build
-docker-compose run
+./build.sh
 ```
 
-The first command will take quite a while the first time it is run. Once the second command launches,
-you should be able to point a browser to http://localhost:5000/ and see the DOMjudge system.
+The build process will take several minutes to complete. This process builds both a
+[domserver](https://hub.docker.com/repository/docker/tsacoding/domserver) (the web front end) and a
+[judgehost](https://hub.docker.com/repository/docker/tsacoding/judgehost) (the system that actually
+evaluates the contestants’ code) image. At the end of the build process, the script will prompt you
+to upload the build to Docker Hub. In order for the upload to work, you must already be logged into
+Docker Hub via the [docker login](https://docs.docker.com/engine/reference/commandline/login/)
+command.
