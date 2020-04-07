@@ -10,7 +10,7 @@ services:
       - .env
     command: mysqld --max-connections=1000
   domserver:
-    image: "tsacoding/domserver:7.2.0"
+    image: "tsacoding/domserver:latest"
     container_name: dj_domserver
     ports:
       - 5000:80
@@ -19,7 +19,7 @@ services:
     env_file:
       - .env
   judgehost:
-    image: "tsacoding/judgehost:7.2.0"
+    image: "tsacoding/judgehost:latest"
     container_name: dj_judgehost
     depends_on:
       - domserver

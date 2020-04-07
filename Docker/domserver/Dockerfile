@@ -1,5 +1,4 @@
 FROM debian:latest AS domserver-build
-MAINTAINER DOMjudge team <team@domjudge.org>
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -37,7 +36,6 @@ RUN /domjudge-src/build.sh
 
 # Now create an image with the actual build in it
 FROM debian:latest
-MAINTAINER DOMjudge team <team@domjudge.org>
 
 ENV DEBIAN_FRONTEND=noninteractive \
     CONTAINER_TIMEZONE=Europe/Amsterdam \
