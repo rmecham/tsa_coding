@@ -48,4 +48,11 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     docker push tsacoding/judgehost:${BUILD}
     docker push tsacoding/domserver:latest
     docker push tsacoding/judgehost:latest
+else
+    echo "To accept the build later on, perform the following:"
+    echo "echo "$BUILD" > .lastbuild"
+    echo "docker push tsacoding/domserver:${BUILD}"
+    echo "docker push tsacoding/judgehost:${BUILD}"
+    echo "docker push tsacoding/domserver:latest"
+    echo "docker push tsacoding/judgehost:latest"
 fi

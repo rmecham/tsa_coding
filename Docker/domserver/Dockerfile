@@ -66,6 +66,7 @@ RUN php composer-setup.php \
 COPY --from=domserver-build /opt/domjudge/domserver /opt/domjudge/domserver
 COPY --from=domserver-build /opt/domjudge/doc /opt/domjudge/doc
 COPY ["domserver/scripts", "/scripts/"]
+COPY ["domserver/php/*", "/opt/domjudge/domserver/bin/"]
 
 # Add user, create PHP FPM socket dir, change permissions for domjudge directory and fix scripts
 RUN useradd -m domjudge \
