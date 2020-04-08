@@ -1,0 +1,16 @@
+MYSQL_HOST=db
+MYSQL_USER=domjudge
+MYSQL_DATABASE=domjudge
+MYSQL_PASSWORD=>>>CHANGE ME TO A PASSWORD<<<
+MYSQL_ROOT_PASSWORD=>>>CHANGE ME TO A PASSWORD<<<
+DJ_ADMIN_PASSWORD=>>>CHANGE ME TO A PASSWORD<<<
+JUDGEDAEMON_PASSWORD=>>>CHANGE ME TO A PASSWORD<<<
+# Time Zone Choices:
+# For Eastern, America/New_York
+# For Central, America/Chicago
+# For Mountain, America/Denver
+# For Pacific, America/Los_Angeles
+# For Alaska, America/Anchorage
+# For Hawaii, Pacific/Honolulu
+# For Arizona (i.e. Mountain without DST), America/Phoenix
+CONTAINER_TIMEZONE=America/Denver
