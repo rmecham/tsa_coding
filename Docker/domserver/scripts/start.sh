@@ -191,5 +191,5 @@ then
     echo
 fi
 
-/opt/domjudge/domserver/bin/set_passwords.php
+/opt/domjudge/domserver/bin/db_setup.php
 exec supervisord -n -c /etc/supervisor/supervisord.conf

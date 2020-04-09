@@ -26,4 +26,7 @@ if ($judge_pw != NULL) {
     $DB->q("UPDATE user SET password = %s WHERE username = 'judgehost'", dj_password_hash($judge_pw));
 }
 
+// Enable the languages we support.
+$DB->q("UPDATE language SET allow_submit = 1 WHERE langid IN ('py3', 'rb', 'js', 'csharp')");
+
 ?>

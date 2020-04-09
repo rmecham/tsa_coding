@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+# Start with a clean slate.
+rm *.tar.gz
+
 # Establish build number.
 LAST_BUILD=$(<.lastbuild)
 TIMESTAMP="$(date "+%Y%m")"
