@@ -32,7 +32,7 @@ programming languages are), then the process is relatively straightforward:
 
 1.  Add the relevant apt package names to the `dj_make_chroot` command inside the
     `chroot-and-tar.sh` script. This will add the language to the `chroot` environment.
-2.  Add the relevant apt package names to the `apt-get install` section of the `Dockerfile`. This
+2.  Add the relevant apt package names to the `apt install` section of the `Dockerfile`. This
     will add the language to the judgehost image outside of the `chroot` environment.
 
 ## Differences from the Default DOMjudge jugdehost Image

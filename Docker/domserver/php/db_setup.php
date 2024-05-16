@@ -27,6 +27,6 @@ if ($judge_pw != NULL) {
 }
 
 // Enable the languages we support.
-$DB->q("UPDATE language SET allow_submit = 1 WHERE langid IN ('py3', 'rb', 'js', 'csharp')");
+$DB->q("UPDATE language SET allow_submit = 1 WHERE langid IN ('py3', 'rb', 'js', 'csharp', 'swift')");
 
 ?>

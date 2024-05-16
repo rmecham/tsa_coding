@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 
 # Start with a clean slate.
 rm *.tar.gz
@@ -19,27 +19,37 @@ DJ_VERSION=$(<.djversion)
 URL=https://www.domjudge.org/releases/domjudge-${DJ_VERSION}.tar.gz
 FILE=domjudge.tar.gz
 echo "[..] Downloading DOMJuge version ${DJ_VERSION}..."
-if ! curl -f -s -o ${FILE} ${URL}
+if ! wget --quiet "${URL}" -O ${FILE}
 then
     echo "[!!] DOMjudge version ${DJ_VERSION} file not found on https://www.domjudge.org/releases"
     exit 1
 fi
-echo "[ok] DOMjudge version ${DJ_VERSION} downloaded as domjudge.tar.gz"; echo
+echo "[ok] DOMjudge version ${DJ_VERSION} downloaded as ${FILE}"; echo
 
+NAMESPACE="tsacoding"
 echo "[..] Building Docker image for domserver using intermediate build image..."
-docker build -t tsacoding/domserver:${BUILD} -t tsacoding/domserver:latest -f domserver/Dockerfile .
+# docker build -t tsacoding/domserver:${BUILD} -t tsacoding/domserver:latest -f domserver/Dockerfile .
+./build-domjudge.sh "${NAMESPACE}/domserver:${BUILD}"
 echo "[ok] Done building Docker image for domserver"
 
+# Download Swift package.
+SWIFT_VERSION=$(<.swiftversion)
+URL=https://swift.org/builds/swift-${SWIFT_VERSION}-release/ubuntu2204/swift-${SWIFT_VERSION}-RELEASE/swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04.tar.gz
+FILE=swift.tar.gz
+echo "[..] Downloading Swift version ${SWIFT_VERSION}"
+if ! curl -f -s -o ${FILE} ${URL}; then
+    echo "[!!] Swift version ${SWIFT_VERSION} could not be downloaded."
+    exit 1
+fi
+echo "[ok] Swift version ${SWIFT_VERSION} downloaded as ${FILE}."; echo
+
 echo "[..] Building Docker image for judgehost using intermediate build image..."
-docker build -t tsacoding/judgehost:${BUILD}-build -f judgehost/build.Dockerfile .
-docker rm -f tsacoding-judgehost-${BUILD}-build > /dev/null 2>&1 || true
-docker run -it --name tsacoding-judgehost-${BUILD}-build --privileged tsacoding/judgehost:${BUILD}-build
-docker cp tsacoding-judgehost-${BUILD}-build:/chroot.tar.gz .
-docker cp tsacoding-judgehost-${BUILD}-build:/judgehost.tar.gz .
-docker rm -f tsacoding-judgehost-${BUILD}-build
-docker rmi tsacoding/judgehost:${BUILD}-build
-docker build -t tsacoding/judgehost:${BUILD} -t tsacoding/judgehost:latest -f judgehost/Dockerfile .
+./build-judgehost.sh "${NAMESPACE}/judgehost:${BUILD}"
 echo "[ok] Done building Docker image for judgehost"
+
+echo "[..] Building Docker image for judgehost chroot..."
+docker build -t "${NAMESPACE}/default-judgehost-chroot:${BUILD}" -f judgehost/Dockerfile.chroot .
+echo "[ok] Done building Docker image for judgehost chroot"
 
 read -p "Accept these builds and push to Docker Hub? " -n 1 -r
 echo  # Advance a line.

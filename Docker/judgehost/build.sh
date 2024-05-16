@@ -1,22 +1,12 @@
-#!/bin/bash -e
+#!/bin/sh -eu
 
 cd /domjudge-src/domjudge*
-USE_LEGACY=0
-if [[ ! -d webapp ]]
-then
-    USE_LEGACY=1
-fi
-if [[ "${USE_LEGACY}" -eq "0" ]]
-then
-    echo "default	http://localhost/api	dummy	dummy" > etc/restapi.secret
-else
-    echo "default	http://localhost/api/v4	dummy	dummy" > etc/restapi.secret
-fi
 chown -R domjudge: .
+# If we used a local source tarball, it might not have been built yet
+sudo -u domjudge make configure
 sudo -u domjudge ./configure -with-baseurl=http://localhost/
+
+echo "default	http://localhost/api	dummy	dummy" | sudo -u domjudge tee etc/restapi.secret > /dev/null
+
 sudo -u domjudge make judgehost
 make install-judgehost
-if [[ "${USE_LEGACY}" -eq "1" ]]
-then
-    touch /opt/domjudge/judgehost/legacy
-fi

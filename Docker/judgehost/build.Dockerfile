@@ -1,26 +1,28 @@
-FROM debian:latest
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install required packages for build of judgehost
-RUN apt-get update \
-    && apt-get install --no-install-recommends --no-install-suggests -y \
-    autoconf automake git \
-    gcc g++ make zip unzip \
-    php-cli php-zip lsb-release debootstrap \
-    php-gd php-curl php-mysql php-json \
-    php-gmp php-xml php-mbstring \
-    sudo bsdmainutils ntp libcgroup-dev procps \
-    libcurl4-gnutls-dev libjsoncpp-dev libmagic-dev \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt update \
+	&& apt install --no-install-recommends --no-install-suggests -y \
+	autoconf automake git \
+	gcc g++ make zip unzip \
+	php-cli php-zip lsb-release debootstrap \
+	php-gd php-curl php-mysql php-json \
+	php-gmp php-xml php-mbstring \
+	sudo bsdmainutils ntp libcgroup-dev procps \
+	libcurl4-gnutls-dev libjsoncpp-dev libmagic-dev \
+	ca-certificates \
+	&& rm -rf /var/lib/apt/lists/*
 
 # Set up user
 RUN useradd -m domjudge
 
 # Install composer
-ADD https://getcomposer.org/installer composer-setup.php
-RUN php composer-setup.php \
-    && mv /composer.phar /usr/local/bin/composer
+
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+	&& php composer-setup.php \
+	&& mv /composer.phar /usr/local/bin/composer
 
 # Add DOMjudge source code and build script
 ADD domjudge.tar.gz /domjudge-src

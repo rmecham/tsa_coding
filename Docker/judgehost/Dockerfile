@@ -1,7 +1,7 @@
-FROM debian:latest
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    CONTAINER_TIMEZONE=Europe/Amsterdam \
+    CONTAINER_TIMEZONE=America/Denver \
     DOMSERVER_BASEURL=http://domserver/ \
     JUDGEDAEMON_USERNAME=judgehost \
     JUDGEDAEMON_PASSWORD=password \
@@ -10,13 +10,17 @@ ENV DEBIAN_FRONTEND=noninteractive \
     RUN_USER_UID_GID=62860
 
 # Install required packages for running of judgehost
-RUN apt-get update \
-    && apt-get install --no-install-recommends --no-install-suggests -y \
-    zip unzip acl supervisor sudo procps libcgroup1 \
-    php-cli php-zip php-gd php-curl php-mysql php-json \
-    php-gmp php-xml php-mbstring python3 ruby nodejs \
-    mono-devel \
-    gcc g++ default-jre-headless default-jdk ghc fp-compiler \
+RUN apt update \
+    && apt install --no-install-recommends --no-install-suggests -y \
+    # Packages from the domjudge-packaging original
+    dumb-init \
+	acl lsof zip unzip supervisor sudo procps libcgroup \
+	php-cli php-zip php-gd php-curl php-mysql php-json \
+	php-gmp php-xml php-mbstring python3 \
+	gcc g++ default-jre-headless default-jdk ghc fp-compiler \
+    # Custom packages
+    ruby nodejs mono-devel clang libicu-dev \
+    # Step from domjudge-packageing original
     && rm -rf /var/lib/apt/lists/*
 
 # Add chroot and judgehost data
@@ -24,12 +28,19 @@ ADD chroot.tar.gz /
 ADD judgehost.tar.gz /
 RUN cp /opt/domjudge/judgehost/etc/sudoers-domjudge /etc/sudoers.d/
 
+# Add Swift
+COPY swift.tar.gz /
+RUN tar -xzf /swift.tar.gz --directory / --strip-components=1
+
 # Add scripts
-COPY ["judgehost/scripts", "/scripts/"]
+COPY judgehost/scripts /scripts/
+
+# Make the scripts available to the root user
+ENV PATH="$PATH:/opt/domjudge/judgehost/bin"
 
 # Change start script permissions, add user and fix permissions
-RUN chmod +x /scripts/* \
-    && useradd -m domjudge \
-    && chown -R domjudge: /opt/domjudge
-ENTRYPOINT ["/scripts/wait-for-it.sh", "domserver:80", "-t", "120", "--"]
+COPY judgehost/configure.sh /configure.sh
+RUN chmod 700 /configure.sh && /configure.sh && rm -f /configure.sh
+
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["/scripts/start.sh"]
