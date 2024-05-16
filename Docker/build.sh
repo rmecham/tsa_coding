@@ -1,7 +1,7 @@
 #!/bin/bash -eu
 
 # Start with a clean slate.
-rm *.tar.gz
+rm *.tar.gz || true
 
 # Establish build number.
 LAST_BUILD=$(<.lastbuild)
@@ -34,7 +34,7 @@ echo "[ok] Done building Docker image for domserver"
 
 # Download Swift package.
 SWIFT_VERSION=$(<.swiftversion)
-URL=https://swift.org/builds/swift-${SWIFT_VERSION}-release/ubuntu2204/swift-${SWIFT_VERSION}-RELEASE/swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04.tar.gz
+URL=https://download.swift.org/swift-${SWIFT_VERSION}-release/ubuntu2204/swift-${SWIFT_VERSION}-RELEASE/swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04.tar.gz
 FILE=swift.tar.gz
 echo "[..] Downloading Swift version ${SWIFT_VERSION}"
 if ! curl -f -s -o ${FILE} ${URL}; then
@@ -48,7 +48,7 @@ echo "[..] Building Docker image for judgehost using intermediate build image...
 echo "[ok] Done building Docker image for judgehost"
 
 echo "[..] Building Docker image for judgehost chroot..."
-docker build -t "${NAMESPACE}/default-judgehost-chroot:${BUILD}" -f judgehost/Dockerfile.chroot .
+docker build -t "${NAMESPACE}/default-judgehost-chroot:${BUILD}" -f judgehost/chroot.Dockerfile .
 echo "[ok] Done building Docker image for judgehost chroot"
 
 read -p "Accept these builds and push to Docker Hub? " -n 1 -r

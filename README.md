@@ -15,7 +15,7 @@ plan to use to run DOMjudge.
 If you are planning to run DOMjudge on Linux, you will need to ensure that `cgroups` are
 enabled. (This is a feature of the Linux kernel that allows DOMjudge to execute submitted code in
 an isolated environment for better security.) Instructions for doing so can be found
-[in the DOMjudge documentation](https://www.domjudge.org/docs/manual/install-judgehost.html#linux-control-groups).
+[in the DOMjudge documentation](https://www.domjudge.org/docs/manual/8.2/install-judgehost.html#linux-control-groups).
 
 *If you are running Docker on macOS or Windows, you do not need to perform this step.*
 

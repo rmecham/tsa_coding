@@ -14,7 +14,7 @@ RUN apt update \
     && apt install --no-install-recommends --no-install-suggests -y \
     # Packages from the domjudge-packaging original
     dumb-init \
-	acl lsof zip unzip supervisor sudo procps libcgroup \
+	acl lsof zip unzip supervisor sudo procps libcgroup1 \
 	php-cli php-zip php-gd php-curl php-mysql php-json \
 	php-gmp php-xml php-mbstring python3 \
 	gcc g++ default-jre-headless default-jdk ghc fp-compiler \
