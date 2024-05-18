@@ -1,21 +1,24 @@
 version: '3.3'
 
 services:
-  db:
+  mariadb:
     image: "mariadb:latest"
     container_name: dj_db
-    volumes:
-      - coding_db:/var/lib/mysql
+    hostname: mariadb
     env_file:
       - .env
-    command: mysqld --max-connections=1000
+    ports:
+      - 13306:3306
+    command: --max-connections=1000 --max-allowed-packet=512M
+    volumes:
+      - coding_db:/var/lib/mysql
   domserver:
     image: "tsacoding/domserver:latest"
     container_name: dj_domserver
     ports:
-      - 5000:80
+      - 12345:80
     depends_on:
-      - db
+      - mariadb
     env_file:
       - .env
   judgehost:
@@ -27,7 +30,7 @@ services:
       - .env
     privileged: true
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup
 
 volumes:
   coding_db:
