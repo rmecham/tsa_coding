@@ -42,5 +42,5 @@ ENV PATH="$PATH:/opt/domjudge/judgehost/bin"
 COPY judgehost/configure.sh /configure.sh
 RUN chmod 700 /configure.sh && /configure.sh && rm -f /configure.sh
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+ENTRYPOINT ["/scripts/wait-for-it.sh", "domserver:80", "-t", "240", "--"]
 CMD ["/scripts/start.sh"]
