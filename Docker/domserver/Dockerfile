@@ -86,5 +86,5 @@ EXPOSE 80
 
 # Healthchecking script
 HEALTHCHECK --interval=10s --timeout=10s --start-period=30s --retries=3 CMD [ "/scripts/bin/healthcheck" ]
-ENTRYPOINT ["/scripts/wait-for-it.sh", "db:3306", "-t", "240", "--"]
+ENTRYPOINT ["/scripts/wait-for-it.sh", "mariadb:3306", "-t", "240", "--"]
 CMD ["/scripts/start.sh"]
