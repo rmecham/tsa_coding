@@ -22,6 +22,9 @@ do
 	fi
 done
 
+echo "[..] Setting passwords.
+/opt/domjudge/domserver/bin/set_passwords.php
+
 echo "[..] Starting supervisor"
 
 exec supervisord -n -c /etc/supervisor/supervisord.conf

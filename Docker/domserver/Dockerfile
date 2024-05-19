@@ -73,6 +73,7 @@ COPY --from=domserver-build /opt/domjudge/doc /opt/domjudge/doc
 # Copy scripts
 COPY domserver/scripts /scripts/
 COPY domserver/supervisor /etc/supervisor/conf.d/
+COPY ["domserver/php/*", "/opt/domjudge/domserver/bin/"]
 
 # Make the scripts available to the root user
 ENV PATH="$PATH:/opt/domjudge/domserver/bin"
