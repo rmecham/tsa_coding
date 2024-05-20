@@ -22,7 +22,7 @@ do
 	fi
 done
 
-echo "[..] Setting passwords.
+echo "[..] Setting passwords."
 /opt/domjudge/domserver/bin/set_passwords.php
 
 echo "[..] Starting supervisor"
