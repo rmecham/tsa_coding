@@ -1,6 +1,7 @@
 #!/bin/sh -eu
 
 cd /domjudge-src/domjudge*
+cp /domjudge-src/ResetAdminPasswordsCommand.php ./webapp/src/Command/
 chown -R domjudge: .
 # If we used a local source tarball, it might not have been built yet
 sudo -u domjudge sh -c '. /venv/bin/activate && make dist'

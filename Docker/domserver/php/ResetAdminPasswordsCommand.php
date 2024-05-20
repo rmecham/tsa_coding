@@ -54,7 +54,7 @@ class ResetAdminPasswordsCommand extends Command
             $this->passwordHasher->hashPassword($admin_user, $admin_pw)
         );
         $judge_user->setPassword(
-            $this->passwordHasher->hasPassword($judge_user, $judge_pw)
+            $this->passwordHasher->hashPassword($judge_user, $judge_pw)
         );
         $this->em->flush();
 
