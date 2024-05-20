@@ -23,7 +23,7 @@ do
 done
 
 echo "[..] Setting passwords."
-/opt/domjudge/domserver/bin/set_passwords.php
+/opt/domjudge/domserver/webapp/bin/console domjudge:reset-admin-passwords
 
 echo "[..] Starting supervisor"
 
