@@ -17,7 +17,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
     name: 'domjudge:reset-admin-passwords',
     description: 'Resets the admin and judgehost passwords based on environment variables'
 )]
-class ResetUserPasswordCommand extends Command
+class ResetAdminPasswordsCommand extends Command
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
