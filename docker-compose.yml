@@ -24,6 +24,7 @@ services:
   judgehost:
     image: "tsacoding/judgehost:latest"
     container_name: dj_judgehost
+    hostname: judgehost
     depends_on:
       - domserver
     env_file:
