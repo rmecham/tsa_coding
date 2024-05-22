@@ -28,6 +28,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 ADD domjudge.tar.gz /domjudge-src
 ADD judgehost/build.sh /domjudge-src
 
+# Copy the Swift toolchain into the container; will be used by chroot-and-tar.
+COPY swift.tar.gz /
+
 # Build and install judgehost
 RUN /domjudge-src/build.sh
 

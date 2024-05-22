@@ -28,10 +28,6 @@ ADD chroot.tar.gz /
 ADD judgehost.tar.gz /
 RUN cp /opt/domjudge/judgehost/etc/sudoers-domjudge /etc/sudoers.d/
 
-# Add Swift
-COPY swift.tar.gz /
-RUN tar -xzf /swift.tar.gz --directory / --strip-components=1
-
 # Add scripts
 COPY judgehost/scripts /scripts/
 
