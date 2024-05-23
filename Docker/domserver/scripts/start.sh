@@ -25,6 +25,8 @@ done
 echo "[..] Setting passwords."
 /opt/domjudge/domserver/webapp/bin/console domjudge:reset-admin-passwords
 
-echo "[..] Starting supervisor"
+echo "[..] Enabling languages."
+/opt/domjudge/domserver/webapp/bin/console domjudge:enable-languages
 
+echo "[..] Starting supervisor"
 exec supervisord -n -c /etc/supervisor/supervisord.conf
