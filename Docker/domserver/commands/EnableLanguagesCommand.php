@@ -44,7 +44,8 @@ class EnableLanguagesCommand extends Command
 
         $this->em->flush();
 
-        $style->success('The following languages have been enabled: ' . $langs);
+        $langs_str = implode(', ', $langs);
+        $style->success('The following languages have been enabled: ' . $langs_str . '.');
 
         return Command::SUCCESS;
     }
