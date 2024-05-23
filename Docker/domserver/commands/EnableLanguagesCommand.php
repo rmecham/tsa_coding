@@ -18,6 +18,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class EnableLanguagesCommand extends Command
 {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
+        parent::__construct();
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $style = new SymfonyStyle($input, $output);
