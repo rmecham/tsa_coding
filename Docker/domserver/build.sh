@@ -1,8 +1,15 @@
 #!/bin/sh -eu
 
 cd /domjudge-src/domjudge*
+
+# Overlay new commands.
 cp /domserver-commands/* ./webapp/src/Command/
 rm -rf /domserver-commands
+
+# Overlay new executables.
+/bin/cp -rf /defaultdata/* ./sql/files/defaultdata/
+rm -rf /defaultdata
+
 chown -R domjudge: .
 # If we used a local source tarball, it might not have been built yet
 sudo -u domjudge sh -c '. /venv/bin/activate && make dist'
