@@ -50,3 +50,4 @@ our judgehost image is taken directly from their build process, but has the foll
     *   [NodeJS](https://nodejs.org/en)
     *   [C# (via Mono)](https://www.mono-project.com)
     *   [Swift](https://www.swift.org)
+    *   [Rust](https://www.rust-lang.org)
