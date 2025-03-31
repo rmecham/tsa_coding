@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 AS domserver-build
+FROM ubuntu:24.04 AS domserver-build
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -40,7 +40,7 @@ COPY ["domserver/defaultdata/", "/defaultdata"]
 RUN /domjudge-src/build.sh
 
 # Now create an image with the actual build in it
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
     CONTAINER_TIMEZONE=America/Denver \

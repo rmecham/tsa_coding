@@ -34,7 +34,7 @@ echo "[ok] Done building Docker image for domserver"
 
 # Download Swift package.
 SWIFT_VERSION=$(<.swiftversion)
-URL=https://download.swift.org/swift-${SWIFT_VERSION}-release/ubuntu2204/swift-${SWIFT_VERSION}-RELEASE/swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04.tar.gz
+URL=https://download.swift.org/swift-${SWIFT_VERSION}-release/ubuntu2204/swift-${SWIFT_VERSION}-RELEASE/swift-${SWIFT_VERSION}-RELEASE-ubuntu24.04.tar.gz
 FILE=swift.tar.gz
 echo "[..] Downloading Swift version ${SWIFT_VERSION}"
 if ! curl -f -s -o ${FILE} ${URL}; then
