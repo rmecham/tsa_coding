@@ -9,15 +9,18 @@ ENV DEBIAN_FRONTEND=noninteractive \
     DOMJUDGE_CREATE_WRITABLE_TEMP_DIR=0 \
     RUN_USER_UID_GID=62860
 
+# Set up user
+RUN useradd -m domjudge
+
 # Install required packages for running of judgehost
 RUN apt update \
     && apt install --no-install-recommends --no-install-suggests -y \
     # Packages from the domjudge-packaging original
-    dumb-init \
-	acl lsof zip unzip supervisor sudo procps libcgroup1 \
+    dumb-init pkg-config \
+	acl lsof zip unzip supervisor sudo procps libcgroup2 \
 	php-cli php-zip php-gd php-curl php-mysql php-json \
 	php-gmp php-xml php-mbstring python3 \
-	gcc g++ default-jre-headless default-jdk ghc fp-compiler \
+	gcc g++ default-jre-headless default-jdk-headless ghc fp-compiler \
     # Custom packages
     ruby nodejs mono-devel clang libicu-dev \
     # Step from domjudge-packageing original

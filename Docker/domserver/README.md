@@ -9,6 +9,7 @@ The DOMjudge project maintains its own
 [domserver image on Docker Hub](https://hub.docker.com/r/domjudge/domserver/). The build process for
 our domserver image is taken directly from their build process, but has the following changes:
 
+*   The base image is Ubuntu rather than Debian.
 *   The `wait-for-it.sh` script has been added. This script facilitates the use of the
     `docker-compose` command. By using this script as the entrypoint, the container wait to launch
     the domserver daemon until the database is reachable.

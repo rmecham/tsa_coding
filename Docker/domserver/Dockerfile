@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install required packages for build of domserver
 RUN apt update \
     && apt install --no-install-recommends --no-install-suggests -y \
-    autoconf automake git \
+    autoconf automake git pkg-config \
 	gcc g++ make acl zip unzip \
 	php-cli php-zip \
 	php-gd php-curl php-mysql php-json php-intl \
@@ -36,7 +36,6 @@ COPY ["domserver/commands/*", "/domserver-commands/"]
 COPY ["domserver/defaultdata/", "/defaultdata"]
 
 # Build and install domserver
-# RUN . /venv/bin/activate && /domjudge-src/build.sh
 RUN /domjudge-src/build.sh
 
 # Now create an image with the actual build in it
@@ -51,6 +50,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
     MYSQL_ROOT_PASSWORD=domjudge \
     FPM_MAX_CHILDREN=40 \
     DJ_DB_INSTALL_BARE=0
+
+# Set up user
+RUN useradd -m domjudge
 
 # Install required packages for running of domserver
 RUN apt update \
@@ -88,5 +90,6 @@ EXPOSE 80
 
 # Healthchecking script
 HEALTHCHECK --interval=10s --timeout=10s --start-period=30s --retries=3 CMD [ "/scripts/bin/healthcheck" ]
+
 ENTRYPOINT ["/scripts/wait-for-it.sh", "mariadb:3306", "-t", "240", "--"]
 CMD ["/scripts/start.sh"]

@@ -41,7 +41,12 @@ The DOMjudge project maintains its own
 [judgehost image on Docker Hub](https://hub.docker.com/r/domjudge/judgehost/). The build process for
 our judgehost image is taken directly from their build process, but has the following changes:
 
+*   The base image is Ubuntu rather than Debian.
 *   The `wait-for-it.sh` script has been added. This script facilitates the use of the
     `docker-compose` command. By using this script as the entrypoint, the container wait to launch
     the judgehost daemon until the domserver is reachable.
-*   Support for the [Ruby](https://www.ruby-lang.org/en/) programming language has been added.
+*   Support for additional programming languages has been added, including:
+    *   [Ruby](https://www.ruby-lang.org/en/)
+    *   [NodeJS](https://nodejs.org/en)
+    *   [C# (via Mono)](https://www.mono-project.com)
+    *   [Swift](https://www.swift.org)
