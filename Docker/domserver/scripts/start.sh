@@ -31,5 +31,8 @@ echo "[..] Enabling additional languages."
 echo "[..] Enabling self-registration."
 /opt/domjudge/domserver/webapp/bin/console domjudge:enable-self-registration
 
+echo "[..] Setting penalty time."
+/opt/domjudge/domserver/webapp/bin/console domjudge:set-penalty-time
+
 echo "[..] Starting supervisor"
 exec supervisord -n -c /etc/supervisor/supervisord.conf
