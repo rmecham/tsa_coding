@@ -28,8 +28,8 @@ class EnableLanguagesCommand extends Command
     {
         $style = new SymfonyStyle($input, $output);
 
-        // These are the languages we are targeting to enable: C#, Ruby, Rust, Swift
-        $langs = array('csharp', 'rb', 'rs', 'swift');
+        // These are the languages we are targeting to enable: C#, Javascript, Ruby, Rust, Swift
+        $langs = array('csharp', 'js', 'rb', 'rs', 'swift');
 
         foreach ($langs as $lang) {
             $db_lang = $this->em
