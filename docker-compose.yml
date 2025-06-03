@@ -13,18 +13,40 @@ services:
     volumes:
       - coding_db:/var/lib/mysql
   domserver:
-    image: "tsacoding/domserver:latest"
+    image: "tsacoding/domserver:202506.1"
     container_name: dj_domserver
     ports:
-      - 12345:80
+      - 80:80
     depends_on:
       - mariadb
     env_file:
       - .env
-  judgehost:
-    image: "tsacoding/judgehost:latest"
-    container_name: dj_judgehost
-    hostname: judgehost
+  judgehost1:
+    image: "tsacoding/judgehost:202506.1"
+    container_name: dj_judgehost_1
+    hostname: judgehost1
+    depends_on:
+      - domserver
+    env_file:
+      - .env
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+  judgehost2:
+    image: "tsacoding/judgehost:202506.1"
+    container_name: dj_judgehost_2
+    hostname: judgehost2
+    depends_on:
+      - domserver
+    env_file:
+      - .env
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+  judgehost3:
+    image: "tsacoding/judgehost:202506.1"
+    container_name: dj_judgehost_3
+    hostname: judgehost3
     depends_on:
       - domserver
     env_file:
